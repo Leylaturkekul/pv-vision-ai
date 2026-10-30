@@ -13,10 +13,20 @@ from config import (
     DEFECT_CLASSES_TR,
     DEFECT_NAME_TR_BY_TECHNICAL,
     NUM_CLASSES,
+    PROJECT_ROOT,
 )
 
 
 class ConfigTests(unittest.TestCase):
+    def test_streamlit_system_dependencies_include_libgl(self) -> None:
+        packages = (
+            (PROJECT_ROOT / "packages.txt")
+            .read_text(encoding="utf-8")
+            .splitlines()
+        )
+
+        self.assertIn("libgl1", packages)
+
     def test_class_lists_follow_the_dataset_order(self) -> None:
         expected_turkish = [
             DEFECT_NAME_TR_BY_TECHNICAL[class_name]
