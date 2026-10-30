@@ -26,6 +26,17 @@ class ConfigTests(unittest.TestCase):
         )
 
         self.assertIn("libgl1", packages)
+        self.assertIn("libglib2.0-0", packages)
+
+    def test_streamlit_uses_the_opencv_variant_required_by_ultralytics(self) -> None:
+        requirements = (
+            (PROJECT_ROOT / "requirements.txt")
+            .read_text(encoding="utf-8")
+            .splitlines()
+        )
+
+        self.assertIn("opencv-python==4.10.0.84", requirements)
+        self.assertNotIn("opencv-python-headless==4.10.0.84", requirements)
 
     def test_class_lists_follow_the_dataset_order(self) -> None:
         expected_turkish = [
